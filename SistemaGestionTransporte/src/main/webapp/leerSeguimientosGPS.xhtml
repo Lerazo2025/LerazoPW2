@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>Listado de Seguimiento GPS</title>
+</h:head>
+
+<h:body>
+   <h:form id="formListaSeguimientoGPS">
+      <h2>Registros de Seguimiento GPS</h2>
+
+      <p:dataTable id="tablaSeguimientoGPS" var="seg" value="#{seguimientoGPSBean.seguimientos}"
+                   paginator="true" rows="10"
+                   selectionMode="single"
+                   selection="#{seguimientoGPSBean.seguimientoSeleccionado}"
+                   rowKey="#{seg.id}"
+                   emptyMessage="No hay registros de seguimiento GPS.">
+
+         <p:column headerText="ID" sortBy="#{seg.id}">
+            <h:outputText value="#{seg.id}" />
+         </p:column>
+
+         <p:column headerText="Placa" sortBy="#{seg.placa}">
+            <h:outputText value="#{seg.placa}" />
+         </p:column>
+
+         <p:column headerText="Latitud" sortBy="#{seg.latitud}">
+            <h:outputText value="#{seg.latitud}" />
+         </p:column>
+
+         <p:column headerText="Longitud" sortBy="#{seg.longitud}">
+            <h:outputText value="#{seg.longitud}" />
+         </p:column>
+
+         <p:column headerText="Fecha y Hora" sortBy="#{seg.fechaHora}">
+            <h:outputText value="#{seg.fechaHora}">
+               <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="GMT-6" />
+            </h:outputText>
+         </p:column>
+
+         <p:column headerText="Acciones">
+            <!-- Botón editar -->
+            <p:commandButton icon="pi pi-pencil" title="Editar"
+                             actionListener="#{seguimientoGPSBean.seleccionarSeguimiento(seg)}"
+                             oncomplete="PF('dlgEditarSeguimientoGPS').show()"
+                             update=":formEditarSeguimientoGPS" />
+
+            <!-- Botón eliminar -->
+            <p:commandButton icon="pi pi-trash" title="Eliminar"
+                             action="#{seguimientoGPSBean.eliminarSeguimiento(seg)}"
+                             update=":formListaSeguimientoGPS"
+                             onclick="return confirm('¿Está seguro que desea eliminar este registro?');" />
+         </p:column>
+      </p:dataTable>
+
+      <br/>
+      <p:commandButton value="Volver" icon="pi pi-arrow-left" action="SeguimientoGPS?faces-redirect=true" ajax="false" immediate="true" />
+   </h:form>
+
+   <!-- Diálogo para editar seguimiento GPS -->
+   <p:dialog header="Editar Registro de Seguimiento GPS" widgetVar="dlgEditarSeguimientoGPS" modal="true" closable="true">
+      <h:form id="formEditarSeguimientoGPS">
+         <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputLabel for="placaEditar" value="Placa:" />
+            <p:inputText id="placaEditar" value="#{seguimientoGPSBean.seguimientoSeleccionado.placa}" required="true" />
+
+            <h:outputLabel for="latitudEditar" value="Latitud:" />
+            <p:inputText id="latitudEditar" value="#{seguimientoGPSBean.seguimientoSeleccionado.latitud}" required="true" />
+
+            <h:outputLabel for="longitudEditar" value="Longitud:" />
+            <p:inputText id="longitudEditar" value="#{seguimientoGPSBean.seguimientoSeleccionado.longitud}" required="true" />
+
+            <h:outputLabel for="fechaHoraEditar" value="Fecha y Hora:" />
+            <p:calendar id="fechaHoraEditar" value="#{seguimientoGPSBean.seguimientoSeleccionado.fechaHora}" showTime="true" required="true" pattern="yyyy-MM-dd HH:mm:ss" />
+         </h:panelGrid>
+
+         <p:commandButton value="Actualizar"
+                          action="#{seguimientoGPSBean.actualizarSeguimiento}"
+                          update=":formListaSeguimientoGPS"
+                          oncomplete="PF('dlgEditarSeguimientoGPS').hide()" />
+      </h:form>
+   </p:dialog>
+</h:body>
+</html>

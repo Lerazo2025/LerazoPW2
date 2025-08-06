@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>Módulo Mantenimiento</title>
+   <style>
+      body {
+         background-image: url("resources/Fondo7.jpg");
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         margin: 0;
+         padding: 0;
+         height: 100vh;
+         font-family: sans-serif;
+      }
+      .center-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+      }
+      .botones {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         margin-top: 15px;
+      }
+   </style>
+</h:head>
+
+<h:body>
+   <div class="center-content">
+      <h:form id="formMantenimiento">
+         <h2>Registrar Mantenimiento</h2>
+
+         <p:panel header="Datos del Mantenimiento" style="width: 500px;">
+            <p:panelGrid columns="2" columnClasses="label,value" style="width:100%">
+
+               <h:outputLabel for="vehiculoId" value="Placa:" />
+               <p:inputText id="vehiculoId" value="#{mantenimientoBean.mantenimiento.placa}" required="true" />
+
+               <h:outputLabel for="descripcion" value="Descripción:" />
+               <p:inputTextarea id="descripcion" value="#{mantenimientoBean.mantenimiento.descripcion}" required="true" rows="4" cols="30" />
+
+               <h:outputLabel for="fecha" value="Fecha:" />
+               <p:calendar id="fecha" value="#{mantenimientoBean.mantenimiento.fecha}" pattern="dd/MM/yyyy" required="true" />
+
+               <h:outputLabel for="costo" value="Costo:" />
+               <p:inputText id="costo" value="#{mantenimientoBean.mantenimiento.costo}" required="true" />
+
+            </p:panelGrid>
+
+            <div class="botones">
+               <p:commandButton value="Agregar" action="#{mantenimientoBean.agregar}" update="formMantenimiento" icon="pi pi-plus" />
+               <p:commandButton value="Administrar" action="#{mantenimientoBean.leer}" icon="pi pi-eye" ajax="false" immediate="true" />
+               <p:commandButton value="Menu Principal" icon="pi pi-arrow-left" action="Menu?faces-redirect=true" ajax="false" immediate="true" />
+            </div>
+         </p:panel>
+      </h:form>
+   </div>
+</h:body>
+</html>

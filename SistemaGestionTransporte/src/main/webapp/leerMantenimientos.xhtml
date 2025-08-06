@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>Listado de Mantenimientos</title>
+</h:head>
+
+<h:body>
+   <h:form id="formListaMantenimientos">
+      <h2>Mantenimientos Registrados</h2>
+
+      <p:dataTable id="tablaMantenimientos" var="mantenimiento" value="#{mantenimientoBean.mantenimientos}"
+                   paginator="true" rows="10"
+                   selectionMode="single"
+                   selection="#{mantenimientoBean.mantenimientoSeleccionado}"
+                   rowKey="#{mantenimiento.id}"
+                   emptyMessage="No hay mantenimientos registrados.">
+
+         <p:column headerText="ID" sortBy="#{mantenimiento.id}">
+            <h:outputText value="#{mantenimiento.id}" />
+         </p:column>
+
+         <p:column headerText="Placa" sortBy="#{mantenimiento.placa}">
+            <h:outputText value="#{mantenimiento.placa}" />
+         </p:column>
+
+         <p:column headerText="Descripción" sortBy="#{mantenimiento.descripcion}">
+            <h:outputText value="#{mantenimiento.descripcion}" />
+         </p:column>
+
+         <p:column headerText="Fecha" sortBy="#{mantenimiento.fecha}">
+            <h:outputText value="#{mantenimiento.fecha}">
+               <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+         </p:column>
+
+         <p:column headerText="Costo" sortBy="#{mantenimiento.costo}">
+            <h:outputText value="#{mantenimiento.costo}" />
+         </p:column>
+
+         <p:column headerText="Acciones">
+            <!-- Botón editar -->
+            <p:commandButton icon="pi pi-pencil" title="Editar"
+                             actionListener="#{mantenimientoBean.seleccionarMantenimiento(mantenimiento)}"
+                             oncomplete="PF('dlgEditarMantenimiento').show()"
+                             update=":formEditarMantenimiento" />
+
+            <!-- Botón eliminar -->
+            <p:commandButton icon="pi pi-trash" title="Eliminar"
+                             action="#{mantenimientoBean.eliminarmantenimiento(mantenimiento)}"
+                             update=":formListaMantenimientos"
+                             onclick="return confirm('¿Está seguro que desea eliminar este mantenimiento?');" />
+         </p:column>
+      </p:dataTable>
+
+      <br/>
+      <p:commandButton value="Volver" action="mantenimientos?faces-redirect=true" ajax="false" immediate="true" />
+   </h:form>
+
+   <!-- Diálogo para editar mantenimiento -->
+   <p:dialog header="Editar Mantenimiento" widgetVar="dlgEditarMantenimiento" modal="true" closable="true">
+      <h:form id="formEditarMantenimiento">
+         <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputLabel for="placa" value="Placa:" />
+            <p:inputText id="placa" value="#{mantenimientoBean.mantenimientoSeleccionado.placa}" required="true" />
+
+            <h:outputLabel for="descripcion" value="Descripción:" />
+            <p:inputTextarea id="descripcion" value="#{mantenimientoBean.mantenimientoSeleccionado.descripcion}" required="true" rows="4" cols="30" />
+
+            <h:outputLabel for="fecha" value="Fecha:" />
+            <p:calendar id="fecha" value="#{mantenimientoBean.mantenimientoSeleccionado.fecha}" pattern="dd/MM/yyyy" required="true" />
+
+            <h:outputLabel for="costo" value="Costo:" />
+            <p:inputText id="costo" value="#{mantenimientoBean.mantenimientoSeleccionado.costo}" required="true" />
+
+         </h:panelGrid>
+
+         <p:commandButton value="Actualizar"
+                          action="#{mantenimientoBean.actualizar}"
+                          update=":formListaMantenimientos"
+                          oncomplete="PF('dlgEditarMantenimiento').hide()" />
+      </h:form>
+   </p:dialog>
+</h:body>
+</html>

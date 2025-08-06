@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+   <title>Pantalla Principal</title>
+   <style>
+      body {
+         background-image: url("resources/Fondomenu.jpg");
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         margin: 0;
+         padding: 0;
+         height: 100vh;
+         font-family: sans-serif;
+         overflow: hidden;
+      }
+
+      .center-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         padding: 20px;
+         border-radius: 12px;
+         box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+         margin: 20px;
+      }
+
+      .botones {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+         gap: 20px;
+         width: 80%;
+         margin-top: 30px;
+      }
+
+      .titulo {
+         font-size: 28px;
+         font-weight: bold;
+         margin-bottom: 20px;
+         color: #ffffff;
+      }
+
+      .p-button {
+         width: 100%;
+         height: 60px;
+         font-size: 16px;
+      }
+   </style>
+</h:head>
+
+<h:body>
+   <h:form>
+      <div class="center-content">
+         <div class="titulo">Sistema de Gestión de Transporte</div>
+
+         <div class="botones">
+            <p:commandButton value="Vehículos" icon="pi pi-car" action="Vehiculo?faces-redirect=true" ajax="false" />
+            <p:commandButton value="Conductores" icon="pi pi-user" action="Conductores?faces-redirect=true" ajax="false" />
+            <p:commandButton value="Mantenimientos" icon="pi pi-wrench" action="mantenimientos?faces-redirect=true" ajax="false" />
+            <p:commandButton value="Ruta" icon="pi pi-map-marker" action="Ruta?faces-redirect=true" ajax="false" />
+            <p:commandButton value="Combustible" icon="pi pi-bolt" action="combustible?faces-redirect=true" ajax="false" />
+            <p:commandButton value="Seguimiento GPS" icon="pi pi-map" action="SeguimientoGPS?faces-redirect=true" ajax="false" />
+         </div>
+      </div>
+   </h:form>
+   <div class="footer-car">
+      <img src="https://i.gifer.com/7efs.gif" alt="Auto animado" class="car-animation" />
+   </div>
+</h:body>
+</html>

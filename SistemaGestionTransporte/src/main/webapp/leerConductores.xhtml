@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Listado de Conductores</title>
+</h:head>
+
+<h:body>
+    <h:form id="formListaConductores">
+        <h2>Conductores Registrados</h2>
+
+        <p:dataTable id="tablaConductores" var="conductor" value="#{conductorBean.conductores}"
+                     paginator="true" rows="10"
+                     selectionMode="single"
+                     selection="#{conductorBean.conductorSeleccionado}"
+                     rowKey="#{conductor.id}"
+                     emptyMessage="No hay conductores registrados.">
+
+            <p:column headerText="ID" sortBy="#{conductor.id}">
+                <h:outputText value="#{conductor.id}" />
+            </p:column>
+
+            <p:column headerText="Nombre" sortBy="#{conductor.nombre}">
+                <h:outputText value="#{conductor.nombre}" />
+            </p:column>
+
+            <p:column headerText="Licencia" sortBy="#{conductor.licencia}">
+                <h:outputText value="#{conductor.licencia}" />
+            </p:column>
+
+            <p:column headerText="Teléfono" sortBy="#{conductor.telefono}">
+                <h:outputText value="#{conductor.telefono}" />
+            </p:column>
+
+            <p:column headerText="Edad" sortBy="#{conductor.edad}">
+                <h:outputText value="#{conductor.edad}" />
+            </p:column>
+
+            <p:column headerText="Acciones">
+                <!-- Botón editar -->
+                <p:commandButton icon="pi pi-pencil" title="Editar"
+                                 actionListener="#{conductorBean.seleccionarConductor(conductor)}"
+                                 oncomplete="PF('dlgEditarConductor').show()"
+                                 update=":formEditarConductor" />
+
+                <!-- Botón eliminar -->
+                <p:commandButton icon="pi pi-trash" title="Eliminar"
+                                 action="#{conductorBean.eliminar(conductor)}"
+                                 update=":formListaConductores"
+                                 onclick="return confirm('¿Está seguro que desea eliminar este conductor?');" />
+            </p:column>
+        </p:dataTable>
+
+        <br/>
+        <p:commandButton value="Volver" action="Conductores?faces-redirect=true" ajax="false" immediate="true" />
+    </h:form>
+
+    <!-- Diálogo para editar conductor -->
+    <p:dialog header="Editar Conductor" widgetVar="dlgEditarConductor" modal="true" closable="true">
+        <h:form id="formEditarConductor">
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <p:inputText id="nombre" value="#{conductorBean.conductorSeleccionado.nombre}" required="true" />
+
+                <h:outputLabel for="licencia" value="Licencia:" />
+                <p:inputText id="licencia" value="#{conductorBean.conductorSeleccionado.licencia}" />
+
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <p:inputText id="telefono" value="#{conductorBean.conductorSeleccionado.telefono}" />
+
+                <h:outputLabel for="edad" value="Edad:" />
+                <p:inputText id="edad" value="#{conductorBean.conductorSeleccionado.edad}" />
+            </h:panelGrid>
+
+            <p:commandButton value="Actualizar"
+                             action="#{conductorBean.actualizar}"
+                             update=":formListaConductores"
+                             oncomplete="PF('dlgEditarConductor').hide()" />
+        </h:form>
+    </p:dialog>
+</h:body>
+</html>

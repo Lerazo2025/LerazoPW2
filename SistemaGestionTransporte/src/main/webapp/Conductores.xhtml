@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Módulo Vehículos</title>
+    <style>
+        body {
+            background-image: url("resources/Fondo2.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+        .center-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="center-content">
+        <h:form id="formVehiculos">
+            <h2>Gestión de Vehículos</h2>
+
+
+            <p:panel header="Datos de Conductor" style="width: 500px;">
+                <p:panelGrid columns="2" columnClasses="label,value" style="width:100%">
+                    <h:outputLabel value="Nombre:" for="nombre" />
+                    <p:inputText id="nombre" value="#{conductorBean.conductor.nombre}" required="true" />
+
+                    <h:outputLabel value="Licencia:" for="licencia" />
+                    <p:inputText id="licencia" value="#{conductorBean.conductor.licencia}" />
+
+                    <h:outputLabel value="Telefono:" for="telefono" />
+                    <p:inputText id="telefono" value="#{conductorBean.conductor.telefono}" />
+
+                    <h:outputLabel value="Edad:" for="edad" />
+                    <p:inputText id="edad" value="#{conductorBean.conductor.edad}" />
+                </p:panelGrid>
+
+                <div class="botones">
+                    <p:commandButton value="Agregar" action="#{conductorBean.agregar}" update="formVehiculos" icon="pi pi-plus" />
+                    <p:commandButton value="Administrar" action="#{conductorBean.leer}" icon="pi pi-eye" ajax="false" immediate="true" />
+                    <p:commandButton value="Menu Principal" icon="pi pi-arrow-left" action="Menu?faces-redirect=true" ajax="false" immediate="true" />
+
+                </div>
+            </p:panel>
+        </h:form>
+    </div>
+</h:body>
+</html>

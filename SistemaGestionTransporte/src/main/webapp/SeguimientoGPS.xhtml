@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>Módulo Seguimiento GPS</title>
+   <style>
+      body {
+         background-image: url("resources/Fondo10.jpg");
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         margin: 0;
+         padding: 0;
+         height: 100vh;
+         font-family: sans-serif;
+      }
+      .center-content {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         flex-direction: column;
+      }
+
+      .botones {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         margin-top: 15px;
+      }
+   </style>
+</h:head>
+
+<h:body>
+   <div class="center-content">
+      <h:form id="formSeguimientoGPS">
+         <h2>Gestión de Seguimiento GPS</h2>
+
+         <p:panel header="Datos de Seguimiento" style="width: 500px;">
+            <p:panelGrid columns="2" columnClasses="label,value" style="width:100%">
+               <h:outputLabel value="Placa:" for="placa" />
+               <p:inputText id="placa" value="#{seguimientoGPSBean.seguimiento.placa}" required="true" />
+
+               <h:outputLabel value="Latitud:" for="latitud" />
+               <p:inputText id="latitud" value="#{seguimientoGPSBean.seguimiento.latitud}" required="true" />
+
+               <h:outputLabel value="Longitud:" for="longitud" />
+               <p:inputText id="longitud" value="#{seguimientoGPSBean.seguimiento.longitud}" required="true" />
+
+               <h:outputLabel value="Fecha y Hora:" for="fechaHora" />
+               <p:calendar id="fechaHora" value="#{seguimientoGPSBean.seguimiento.fechaHora}" pattern="dd/MM/yyyy HH:mm:ss"
+                           showTime="true" required="true" disabled="true"/>
+            </p:panelGrid>
+
+            <div class="botones">
+               <p:commandButton value="Agregar" action="#{seguimientoGPSBean.agregar}" update="formSeguimientoGPS" icon="pi pi-plus" />
+               <p:commandButton value="Administrar" action="#{seguimientoGPSBean.leer}" icon="pi pi-eye" ajax="false" immediate="true" />
+               <p:commandButton value="Menu Principal" icon="pi pi-arrow-left" action="Menu?faces-redirect=true" ajax="false" immediate="true" />
+            </div>
+         </p:panel>
+      </h:form>
+   </div>
+</h:body>
+</html>
